@@ -1,17 +1,22 @@
-name: example
-on:
-  schedule:
-    - cron: '*/5 * * * *' # Every 5 minutes
+name: workflow
+on: push
 jobs:
   job:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Check Tickets
-        uses: mooyoul/melon-ticket-actions@v1.1.0
+      - uses: actions/checkout@v1
+      - name: Prepare
+        run: npm ci
+      - name: Lint
+        uses: mooyoul/tslint-actions@master
         with:
-          product-id: 210972
-          schedule-id: 100001
-          seat-id: 1_0
-          slack-incoming-webhook-url: 'https://hooks.slack.com/services/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'
-          message: 'hello'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pattern: '*.ts'
+      - name: Build
+        run: npm run build
+      - name: Publish
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: npx semantic-release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}

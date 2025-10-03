@@ -1,0 +1,25 @@
+name: ticket-monitor
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+jobs:
+  check-tickets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        seat: ['F1', 'F2', 'E', 'D', 'C']  # 分開檢查每個區域
+      fail-fast: false  # 一個失敗不影響其他
+    
+    steps:
+      - name: Check ${{ matrix.seat }} tickets
+        uses: mooyoul/melon-ticket-actions@v1.1.0
+        with:
+          product-id: '211992'
+          schedule-id: '100001'
+          seat-id: ${{ matrix.seat }}
+          slack-incoming-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          message: 'TWICE ${{ matrix.seat }}區有票！'
+        continue-on-error: true

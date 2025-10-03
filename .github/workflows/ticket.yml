@@ -1,7 +1,5 @@
 name: ticket
 on:
-  schedule:
-    - cron: '*/4 * * * *' 
   workflow_dispatch:
 jobs:
   job:

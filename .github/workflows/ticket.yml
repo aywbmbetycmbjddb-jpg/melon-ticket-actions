@@ -1,7 +1,7 @@
 name: ticket
 on:
   schedule:
-    - cron: '*/2 * * * *' # Every 1 minutes
+    - cron: '*/4 * * * *' # Every 1 minutes
 jobs:
   job:
     runs-on: ubuntu-latest
@@ -10,8 +10,8 @@ jobs:
       - name: Check Tickets
         uses: mooyoul/melon-ticket-actions@v1.1.0
         with:
-          product-id: '210972'
+          product-id: '211992'
           schedule-id: '100001'
-          seat-id: '1_0'
+          seat-id: 'A,B,C,D,E,F,I,J,K,L,M,N,F1,F2'
           slack-incoming-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          message: 'hello'
+          message: '!!!!!'

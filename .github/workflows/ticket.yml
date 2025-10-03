@@ -13,6 +13,6 @@ jobs:
         with:
           product-id: '211992'
           schedule-id: '100001'
-          seat-id: 1_0
+          seat-id: 'A,B,C,D,E,F,I,J,K,L,M,N,F1,F2'
           slack-incoming-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
           message: '!!!!!'
